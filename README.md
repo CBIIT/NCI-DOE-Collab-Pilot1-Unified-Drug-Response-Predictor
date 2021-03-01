@@ -26,4 +26,4 @@ Trained Model:
 * Trained model weights are used in inference [uno.model.h5](https://modac.cancer.gov/searchTab?dme_data_id=)
 
 ### Technical Details:
-Please refer to this [README](./Pilot1/UNO/README.md)
+Please refer to this [README](./Pilot1/Uno/README.md)
