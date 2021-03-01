@@ -1,7 +1,7 @@
 # NCI-DOE-Collab-Pilot1-Unified-Drug-Response-Predictor
 
 ### Description:
-The Unified Drug Response Predictor (UNO) shows how to train and use a neural network model to predict tumor dose response across multiple data sources: CCLE, CTRP, gCSI, GDSC, NCI60 single drug response, and ALMANAC drug pair response.
+The Unified Drug Response Predictor (UNO) shows how to train and use a neural network model to predict tumor dose response across multiple data sources.
 
 ### User Community:	
 Primary: Cancer biology data modeling</br>
