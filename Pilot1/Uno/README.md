@@ -181,9 +181,11 @@ To test the trained model in inference, the script [uno_infer2.py](uno_infer2.py
 ```
 python uno_infer2.py --train_sources CTRP GDSC NCI60 SCL SCLC ALMANAC  --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True --test_sources gCSI  
 ...
-Testing on data from gCSI (31648)
-  mse: 0.1656
-  mae: 0.2882
-  r2: 0.6206
-  corr: 0.8022
+Loaded model from disk
+partition:test, rank:0, sharded index size:6304, batch_size:32, steps:197
+Testing on data from gCSI (6304)
+  mse: 0.2040
+  mae: 0.2949
+  r2: 0.2434
+  corr: 0.5161
 ```
