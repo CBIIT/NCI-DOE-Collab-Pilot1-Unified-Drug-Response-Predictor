@@ -18,13 +18,13 @@ To train the model from scratch, the script [uno_baseline_keras2.py](uno_baselin
 * Creates and trains the keras model
 * Saves the best trained model based on the validation accuracy
 
-Uno can be trained with a subset of dose response data sources. Here is an example of training with all 6 sources: CCLE, CTRP, gCSI, GDSC, NCI60 single drug response, ALMANAC drug pair response.
+Uno can be trained with a subset of dose response data sources. Here is an example of training with all 6 sources: CTRP, GDSC, SCL, SCLC, NCI60 single drug response, ALMANAC drug pair response.
 
 ```
-python uno_baseline_keras2.py --train_sources all --cache cache/all --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True --cp True --batch_size 256 --timeout -1 
+python uno_baseline_keras2.py --train_sources CTRP GDSC NCI60 SCL SCLC ALMANAC --cache cache/all6 --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True --cp True --batch_size 256 --timeout -1  
 Using TensorFlow backend.
-Params: {'train_sources': ['all'], 'test_sources': ['train'], 'cell_types': None, 'cell_features': ['rnaseq'], 'drug_features': ['descriptors', 'fingerprints'], 'dense': [1000, 1000, 1000], 'dense_feature_layers': [1000, 1000, 1000], 'activation': 'relu', 'loss': 'mse', 'optimizer': 'adam', 'scaling': 'std', 'dropout': 0, 'epochs': 10, 'batch_size': 256, 'val_split': 0.2, 'cv': 1, 'max_val_loss': 1.0, 'learning_rate': None, 'base_lr': None, 'residual': False, 'reduce_lr': False, 'warmup_lr': False, 'batch_normalization': False, 'feature_subsample': 0, 'rng_seed': 2018, 'save_path': 'save/uno', 'no_gen': False, 'verbose': None, 'gpus': [0], 'timeout': -1, 'logfile': None, 'train_bool': True, 'experiment_id': 'EXP000', 'run_id': 'RUN000', 'shuffle': False, 'profiling': False, 'agg_dose': None, 'by_cell': None, 'by_drug': None, 'cell_subset_path': '', 'drug_subset_path': '', 'drug_median_response_min': -1, 'drug_median_response_max': 1, 'no_feature_source': True, 'no_response_source': True, 'dense_cell_feature_layers': None, 'dense_drug_feature_layers': None, 'use_landmark_genes': True, 'use_filtered_genes': False, 'feature_subset_path': '', 'cell_feature_subset_path': '', 'drug_feature_subset_path': '', 'preprocess_rnaseq': 'source_scale', 'es': False, 'cp': True, 'tb': False, 'tb_prefix': 'tb', 'partition_by': None, 'cache': 'cache/all', 'single': False, 'export_csv': None, 'export_data': None, 'use_exported_data': None, 'growth_bins': 0, 'initial_weights': None, 'save_weights': None, 'data_type': <class 'numpy.float32'>, 'output_dir': '/gpfs/gsfs12/users/lup2/NCI-DOE-Collab-Pilot1-Tumor_Classifier/Benchmarks/Pilot1/Uno_1/Output/EXP000/RUN000'}
-Cache parameter file does not exist: cache/ALL.params.json
+Params: {'train_sources': ['CTRP', 'GDSC', 'NCI60', 'SCL', 'SCLC', 'ALMANAC'], 'test_sources': ['train'], 'cell_types': None, 'cell_features': ['rnaseq'], 'drug_features': ['descriptors', 'fingerprints'], 'dense': [1000, 1000, 1000], 'dense_feature_layers': [1000, 1000, 1000], 'activation': 'relu', 'loss': 'mse', 'optimizer': 'adam', 'scaling': 'std', 'dropout': 0, 'epochs': 10, 'batch_size': 256, 'val_split': 0.2, 'cv': 1, 'max_val_loss': 1.0, 'learning_rate': None, 'base_lr': None, 'residual': False, 'reduce_lr': False, 'warmup_lr': False, 'batch_normalization': False, 'feature_subsample': 0, 'rng_seed': 2018, 'save_path': 'save/uno', 'no_gen': False, 'verbose': None, 'gpus': [0], 'timeout': -1, 'logfile': None, 'train_bool': True, 'experiment_id': 'EXP000', 'run_id': 'RUN000', 'shuffle': False, 'profiling': False, 'agg_dose': None, 'by_cell': None, 'by_drug': None, 'cell_subset_path': '', 'drug_subset_path': '', 'drug_median_response_min': -1, 'drug_median_response_max': 1, 'no_feature_source': True, 'no_response_source': True, 'dense_cell_feature_layers': None, 'dense_drug_feature_layers': None, 'use_landmark_genes': True, 'use_filtered_genes': False, 'feature_subset_path': '', 'cell_feature_subset_path': '', 'drug_feature_subset_path': '', 'preprocess_rnaseq': 'source_scale', 'es': False, 'cp': True, 'tb': False, 'tb_prefix': 'tb', 'partition_by': None, 'cache': 'cache/all6', 'single': False, 'export_csv': None, 'export_data': None, 'use_exported_data': None, 'growth_bins': 0, 'initial_weights': None, 'save_weights': None, 'data_type': <class 'numpy.float32'>, 'output_dir': '/gpfs/gsfs12/users/lup2/NCI-DOE-Collab-Pilot1-Tumor_Classifier/Benchmarks/Pilot1/Uno_5/Output/EXP000/RUN000'}
+Cache parameter file does not exist: cache/all6.params.json
 Loading data from scratch ...
 Loaded 27769716 single drug dose response measurements
 Loaded 3686475 drug pair dose response measurements
@@ -53,11 +53,15 @@ Filtering drug response data...
   2375 molecular samples with feature and response data
   46837 selected drugs with feature and response data
 Summary of filtered dose response by source:
-        Growth  Sample  Drug1  Drug2
-Source                              
-CCLE     80213     474     22      0
-gCSI     50822     357     16      0
-Grouped response data by drug_pair: 32 groups
+              Growth  Sample  Drug1  Drug2
+Source                                    
+ALMANAC.1A    206580      60    101    101
+ALMANAC.FF   2062098      60     92     71
+ALMANAC.FG   1293465      60     98     27
+CTRP         3397103     812    311      0
+GDSC         1022204     672    213      0
+NCI60       17190561      59  46272      0
+Grouped response data by drug_pair: 51758 groups
 Input features shapes:
   dose1: (1,)
   dose2: (1,)
@@ -67,7 +71,7 @@ Input features shapes:
   drug2.descriptors: (5270,)
   drug2.fingerprints: (2048,)
 Total input dimensions: 15580
-Saved data to cache: cache/all.pkl
+Saved data to cache: cache/all6.pkl
 Combined model:
 __________________________________________________________________________________________________
 Layer (type)                    Output Shape         Param #     Connected to                     
@@ -114,52 +118,52 @@ Total params: 21,275,001
 Trainable params: 21,275,001
 Non-trainable params: 0
 __________________________________________________________________________________________________
+
 Between random pairs in y_val:
-  mse: 0.6071
-  mae: 0.5459
-  r2: -1.0006
-  corr: -0.0003
-Data points per epoch: train = 20158208, val = 5144576, test = 0
-Steps per epoch: train = 78743, val = 20096, test = 0
+  mse: 0.5962
+  mae: 0.5373
+  r2: -0.9995
+  corr: 0.0002
+Data points per epoch: train = 20164096, val = 5007616, test = 0
+Steps per epoch: train = 78766, val = 19561, test = 0
 Epoch 1/10
-78743/78743 [==============================] - 28572s 363ms/step - loss: 0.1730 - mae: 0.2771 - r2: -0.4261 - val_loss: 0.1611 - val_mae: 0.2615 - val_r2: -0.0986
-Current time ....28572.014
+78766/78766 [==============================] - 26356s 335ms/step - loss: 0.1864 - mae: 0.2831 - r2: -0.4848 - val_loss: 0.1694 - val_mae: 0.2581 - val_r2: -0.0464
+Current time ....26355.904
 Epoch 2/10
-78743/78743 [==============================] - 28343s 360ms/step - loss: 0.1313 - mae: 0.2390 - r2: -0.0332 - val_loss: 0.1508 - val_mae: 0.2539 - val_r2: -0.1457
-Current time ....56916.216
+78766/78766 [==============================] - 26503s 336ms/step - loss: 0.1367 - mae: 0.2454 - r2: -0.0868 - val_loss: 0.1552 - val_mae: 0.2603 - val_r2: -0.1849
+Current time ....52859.855
 Epoch 3/10
-78743/78743 [==============================] - 28214s 358ms/step - loss: 0.1211 - mae: 0.2278 - r2: 0.0822 - val_loss: 0.1540 - val_mae: 0.2491 - val_r2: -0.0944
-Current time ....85130.823
+78766/78766 [==============================] - 26393s 335ms/step - loss: 0.1278 - mae: 0.2360 - r2: 0.0182 - val_loss: 0.1693 - val_mae: 0.2504 - val_r2: 0.0922
+Current time ....79252.715
 Epoch 4/10
-78743/78743 [==============================] - 28181s 358ms/step - loss: 0.1132 - mae: 0.2195 - r2: 0.1719 - val_loss: 0.1467 - val_mae: 0.2488 - val_r2: -0.0814
-Current time ....113311.712
+78766/78766 [==============================] - 26390s 335ms/step - loss: 0.1185 - mae: 0.2258 - r2: 0.1099 - val_loss: 0.1448 - val_mae: 0.2454 - val_r2: -0.0578
+Current time ....105642.530
 Epoch 5/10
-78743/78743 [==============================] - 28177s 358ms/step - loss: 0.1085 - mae: 0.2139 - r2: 0.2240 - val_loss: 0.1432 - val_mae: 0.2416 - val_r2: 0.0158
-Current time ....141493.836
+78766/78766 [==============================] - 26483s 336ms/step - loss: 0.1167 - mae: 0.2206 - r2: 0.1496 - val_loss: 0.1441 - val_mae: 0.2438 - val_r2: -0.0658
+Current time ....132125.614
 Epoch 6/10
-78743/78743 [==============================] - 28165s 358ms/step - loss: 0.1053 - mae: 0.2095 - r2: 0.2596 - val_loss: 0.1449 - val_mae: 0.2389 - val_r2: 0.0597
-Current time ....169658.979
+78766/78766 [==============================] - 26473s 336ms/step - loss: 0.1100 - mae: 0.2166 - r2: 0.2073 - val_loss: 0.1439 - val_mae: 0.2381 - val_r2: 0.0305
+Current time ....158599.018
 Epoch 7/10
-78743/78743 [==============================] - 28214s 358ms/step - loss: 0.1018 - mae: 0.2070 - r2: 0.2963 - val_loss: 0.1479 - val_mae: 0.2474 - val_r2: -0.2203
-Current time ....197873.198
+78766/78766 [==============================] - 26299s 334ms/step - loss: 0.1075 - mae: 0.2136 - r2: 0.2460 - val_loss: 0.1497 - val_mae: 0.2372 - val_r2: 0.1101
+Current time ....184898.148
 Epoch 8/10
-78743/78743 [==============================] - 28382s 360ms/step - loss: 0.0991 - mae: 0.2041 - r2: 0.3220 - val_loss: 0.1421 - val_mae: 0.2346 - val_r2: 0.0360
-Current time ....226255.583
+78766/78766 [==============================] - 26217s 333ms/step - loss: 0.1067 - mae: 0.2125 - r2: 0.2685 - val_loss: 0.1492 - val_mae: 0.2514 - val_r2: -0.2018
+Current time ....211114.963
 Epoch 9/10
-78743/78743 [==============================] - 28360s 360ms/step - loss: 0.0961 - mae: 0.2007 - r2: 0.3488 - val_loss: 0.1470 - val_mae: 0.2384 - val_r2: 0.0094
-Current time ....254616.103
-Epoch 10/10
-78743/78743 [==============================] - 28093s 357ms/step - loss: 0.0951 - mae: 0.1991 - r2: 0.3574 - val_loss: 0.1412 - val_mae: 0.2385 - val_r2: 0.0136
+78766/78766 [==============================] - 26194s 333ms/step - loss: 0.1050 - mae: 0.2109 - r2: 0.2854 - val_loss: 0.1413 - val_mae: 0.2386 - val_r2: -0.0088
+Current time ....237309.314
+78766/78766 [==============================] - 26272s 334ms/step - loss: 0.1015 - mae: 0.2070 - r2: 0.3125 - val_loss: 0.1463 - val_mae: 0.2384 - val_r2: 0.0617
 Comparing y_true and y_pred:
-  mse: 0.1412
-  mae: 0.2385
-  r2: 0.5346
-  corr: 0.7323
+  mse: 0.1464
+  mae: 0.2384
+  r2: 0.5091
+  corr: 0.7228
 ```
 
 Training Uno on all data sources is slow. The `--train_sources` parameter can be used to test the code with a smaller set of training data. An example command line is the following.
 ```
-uno_baseline_keras2.py --train_sources CCLE --cache cache/CCLE --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True
+uno_baseline_keras2.py --train_sources gCSI --cache cache/gCSI --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True
 ```
 
 A faster example is given in the `uno_by_drug_example.txt` configuration file. This example focuses on a single drug (paclitaxel) and trains at 15s/epoch on a single P100.
@@ -175,7 +179,7 @@ To test the trained model in inference, the script [uno_infer2.py](uno_infer2.py
 * Reports the accuracy of the model on the test dataset
 
 ```
-python uno_baseline_keras2.py --train_sources CCLE --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True --test_sources gCSI  
+python uno_infer2.py --train_sources CTRP GDSC NCI60 SCL SCLC ALMANAC  --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True --test_sources gCSI  
 ...
 Testing on data from gCSI (31648)
   mse: 0.1656
