@@ -1,5 +1,5 @@
 ### Model description:
-Uno, is a convolutional network for predicting tumor dose response across multiple data sources:  CCLE, CTRP, gCSI, GDSC, NCI60 single drug response, and ALMANAC drug pair response.
+The Pilot1 Unified Drug Response Predictor benchmark, also called Uno, is a deep neural network for modeling cell line response to treatments of single or paired drugs. The model takes cell line molecular features, drug properties and dose information as input and predicts the response in percentage growth. The model uses a multi-tower structure for processing different feature types individually before concatenating them for the final layers. The model also unifies treatment input types of single drugs and drug pairs by allocating two slots for drugs and, in the case of drug pairs, dividing the concentration into the two slots. We have integrated datasets from multiple public sources of drug response studies and provided options for training models with selections of subsets.
 
 ### Setup:
 To setup the python environment needed to train and run this model, first make sure you install [conda](https://docs.conda.io/en/latest/) package manager, clone this repository, then create the environment as shown below.
