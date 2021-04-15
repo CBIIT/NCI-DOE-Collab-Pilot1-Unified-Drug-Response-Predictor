@@ -25,7 +25,7 @@ To train the model from scratch, execute the script [uno_baseline_keras2.py](uno
 * Saves the best-trained model based on the validation accuracy.
 
 You can train Uno with the following dose response data sources, or a subset of these: 
-Source|Parameter
+Data Source|Parameter Value
 ------------ | -------------
 The Cancer Therapeutics Response Portal |CTRP
 The Genomics of Drug Sensitivity in Cancer &#x1F534;_**(Question: project?)**_  |GDSC
