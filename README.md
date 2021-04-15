@@ -16,7 +16,7 @@ The community can use a neural network and multiple machine learning techniques 
 ### Components
 The following components are in the Model and Data Clearinghouse (MoDaC):
 * The [Unified Drug Response Predictor] &#x1F534;_**(Link TBD)**_ asset contains the untrained model and trained model:
-  * The untrained neural network model is defined in uno.model.json. &#x1F534;_**(Question: In the README.txt file, this filename is identified as "model topology file". Would it help the user if we use consistent terminology for this file across GitHub and MoDaC? Such as "topology file for the untrained neural network model"?)**_ The name "Model topology file" may be okay, becuause topolopy can mean "untrained" and "Model topology file" can be used for non neural network model in future if need be.
+  * The model topology file is uno.model.json. 
   * The trained model is defined by combining the untrained model and model weights.
   * The trained model weights are used in inference uno.model.h5.
 * The &#x1F534;_**(Link TBD)**_ asset contains the processed training and test data. 
