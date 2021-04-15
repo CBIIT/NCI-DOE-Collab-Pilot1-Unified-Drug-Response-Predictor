@@ -24,9 +24,18 @@ To train the model from scratch, execute the script [uno_baseline_keras2.py](uno
 * Creates and trains the Keras model.
 * Saves the best-trained model based on the validation accuracy.
 
-Uno can be trained with a subset of dose response data sources. Here is an example of training with all six sources: The Cancer Therapeutics Response Portal (CTRP), The Genomics of Drug Sensitivity in Cancer (GDSC), The Sarcoma (SCL), The Small Cell Lung Cancer (SCLC), The NCI-60 Human Cancer Cell Line Screen (NCI60) single drug response, and A Large Matrix of Anti-Neoplastic Agent Combinations (ALMANAC) drug pair response. &#x1F534;_**(Question: Does the audience already know what these abbreviations stand for?)**_ , Maybe not.
+You can train Uno with the following dose response data sources, or a subset of these: 
+Source|Parameter
+------------ | -------------
+The Cancer Therapeutics Response Portal |CTRP
+The Genomics of Drug Sensitivity in Cancer &#x1F534;_**(Question: project?)**_  |GDSC
+The Sarcoma &#x1F534;_**(Question: Is "Sarcoma" the full name for the SCL source?)**_  |SCL
+The Small Cell Lung Cancer &#x1F534;_**(Question: project?)**_ |SCLC
+The NCI-60 Human Cancer Cell Line Screen single drug response |NCI60
+A Large Matrix of Anti-Neoplastic Agent Combinations drug pair response |ALMANAC
 
-Here is example output from running the script:
+
+Here is example output from running the script with all six sources:
 
 ```
 python uno_baseline_keras2.py --train_sources CTRP GDSC NCI60 SCL SCLC ALMANAC --cache cache/all6 --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True --cp True --batch_size 256 --timeout -1  
