@@ -1,24 +1,50 @@
-### Model description:
-The Pilot1 Unified Drug Response Predictor benchmark, also called Uno, is a deep neural network for modeling cell line response to treatments of single or paired drugs. The model takes cell line molecular features, drug properties and dose information as input and predicts the response in percentage growth. The model uses a multi-tower structure for processing different feature types individually before concatenating them for the final layers. The model also unifies treatment input types of single drugs and drug pairs by allocating two slots for drugs and, in the case of drug pairs, dividing the concentration into the two slots. We have integrated datasets from multiple public sources of drug response studies and provided options for training models with selections of subsets.
+### Model Description
+The Pilot 1 Unified Drug Response Predictor benchmark, also called Uno, is a deep neural network for modeling cell line response to treatments of single or paired drugs. The model takes cell line molecular features, drug properties and dose information as input and predicts the response in percentage growth. The model uses a multi-tower structure for processing different feature types individually before concatenating them for the final layers. The model also unifies treatment input types of single drugs and drug pairs by allocating two slots for drugs and, in the case of drug pairs, dividing the concentration into the two slots. The authors of this model have integrated datasets from multiple public sources of drug response studies and provided options for training models with selections of subsets.
 
-### Setup:
-To setup the python environment needed to train and run this model, first make sure you install [conda](https://docs.conda.io/en/latest/) package manager, clone this repository, then create the environment as shown below.
+### Setup
+To set up the Python environment needed to train and run this model:
+1. Install [conda](https://docs.conda.io/en/latest/) package manager.
+2. Clone this repository.
+3. Create the environment as shown below.
 
 ```bash
    conda env create -f environment.yml -n UNO
    conda activate UNO
    ```
 
-To download the processed data needed to train and test the model, and the trained model files, you should create an account first on the Model and Data Clearinghouse [MoDac](modac.cancer.gov). The training and test scripts will prompt you to enter your MoDac credentials.
+To download the processed data needed to train and test the model, and the trained model files:
+1. Create an account first on the Model and Data Clearinghouse [MoDaC](modac.cancer.gov). 
+2. Follow the instructions in the Training section below.
+3. When prompted, enter your MoDaC credentials.
 
-### Training:
-To train the model from scratch, the script [uno_baseline_keras2.py](uno_baseline_keras2.py) does the following:
-* Reads the model configuration parameters from [uno_default_model.txt](uno_default_model.txt)
-* Downloads the training data and splits it to training/validation sets
-* Creates and trains the keras model
-* Saves the best trained model based on the validation accuracy
+### Training
+To train the model from scratch, execute the script [uno_baseline_keras2.py](uno_baseline_keras2.py). This script does the following:
+* Reads the model configuration parameters from [uno_default_model.txt](uno_default_model.txt).
+* Downloads the training data and splits it to training/validation sets.
+* Creates and trains the Keras model.
+* Saves the best-trained model based on the validation accuracy.
 
-Uno can be trained with a subset of dose response data sources. Here is an example of training with all 6 sources: CTRP, GDSC, SCL, SCLC, NCI60 single drug response, ALMANAC drug pair response.
+You can train Uno with the following dose response data sources, or a subset of these: 
+Data Source|Parameter Value
+------------ | -------------
+The Cancer Therapeutics Response Portal |CTRP
+The Genomics of Drug Sensitivity in Cancer |GDSC
+The NCI Sarcoma |SCL
+The NCI Small Cell Lung Cancer |SCLC
+The NCI-60 Human Cancer Cell Line Screen single drug response |NCI60
+A Large Matrix of Anti-Neoplastic Agent Combinations drug pair response |ALMANAC
+
+Training Uno on all data sources is slow. The `--train_sources` parameter can be used to test the code with a smaller set of training data. An example command line is the following.
+```
+uno_baseline_keras2.py --train_sources gCSI --cache cache/gCSI --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True
+```
+
+A faster example is given in the `uno_by_drug_example.txt` configuration file. This example focuses on a single drug (paclitaxel) and trains at 15s/epoch on a single P100.
+```
+uno_baseline_keras2.py --config_file uno_by_drug_example.txt
+```
+
+Here is example output from running the script with all six sources:
 
 ```
 python uno_baseline_keras2.py --train_sources CTRP GDSC NCI60 SCL SCLC ALMANAC --cache cache/all6 --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True --cp True --batch_size 256 --timeout -1  
@@ -161,22 +187,12 @@ Comparing y_true and y_pred:
   corr: 0.7228
 ```
 
-Training Uno on all data sources is slow. The `--train_sources` parameter can be used to test the code with a smaller set of training data. An example command line is the following.
-```
-uno_baseline_keras2.py --train_sources gCSI --cache cache/gCSI --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True
-```
-
-A faster example is given in the `uno_by_drug_example.txt` configuration file. This example focuses on a single drug (paclitaxel) and trains at 15s/epoch on a single P100.
-```
-uno_baseline_keras2.py --config_file uno_by_drug_example.txt
-```
-
-### Inference: 
-To test the trained model in inference, the script [uno_infer2.py](uno_infer2.py) does the following:
-* Downloads the trained model
-* Downloads the processed test dataset with the corresponding labels
-* Performs inference on the test dataset
-* Reports the accuracy of the model on the test dataset
+### Inference
+To test the trained model in inference, execute the script [uno_infer2.py](uno_infer2.py). This script does the following:
+* Downloads the trained model.
+* Downloads the processed test dataset with the corresponding labels.
+* Performs inference on the test dataset.
+* Reports the accuracy of the model on the test dataset.
 
 ```
 python uno_infer2.py --train_sources CTRP GDSC NCI60 SCL SCLC ALMANAC  --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True --test_sources gCSI  

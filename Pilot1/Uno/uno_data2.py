@@ -694,7 +694,7 @@ class CombinedDataLoader(object):
             if k in params:
                 del params[k]
         dirname = os.path.dirname(cache)
-        if not os.path.exists(dirname):
+        if dirname and not os.path.exists(dirname):
             logger.debug('Creating directory for cache: %s', dirname)
             os.mkdir(dirname)
         param_fname = '{}.params.json'.format(cache)
@@ -848,7 +848,7 @@ class CombinedDataLoader(object):
              train_sources=['GDSC', 'CTRP', 'ALMANAC'],
              # val_sources='train',
              # test_sources=['CCLE', 'gCSI'],
-             test_sources=['train'],
+             test_sources=['gCSI'],
              partition_by='drug_pair'):
 
         params = locals().copy()
@@ -892,11 +892,12 @@ class CombinedDataLoader(object):
         df_source = encode_sources(all_sources)
 
         if 'all' in train_sources:
+            #train_sources = set(all_sources) - set(test_sources)
             train_sources = all_sources
-        if 'all' in test_sources:
-            test_sources = all_sources
-        elif 'train' in test_sources:
-            test_sources = train_sources
+        # if 'all' in test_sources:
+        #     test_sources = all_sources
+        # elif 'train' in test_sources:
+        #     test_sources = train_sources
 
         train_sep_sources = [x for x in all_sources for y in train_sources if x.startswith(y)]
         test_sep_sources = [x for x in all_sources for y in test_sources if x.startswith(y)]
