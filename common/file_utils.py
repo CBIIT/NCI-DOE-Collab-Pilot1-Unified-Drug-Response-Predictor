@@ -11,6 +11,7 @@ from six.moves.urllib.error import URLError, HTTPError
 
 import requests
 from generic_utils import Progbar
+from  modac_utils import get_file_from_modac
 
 
 # Under Python 2, 'urlretrieve' relies on FancyURLopener from legacy
@@ -37,7 +38,6 @@ if sys.version_info[0] == 2:
                 fd.write(chunk)
 else:
     from six.moves.urllib.request import urlretrieve
-
 
 def get_file(fname, origin, untar=False,
              #md5_hash=None, datadir='../Data/common'):
@@ -112,31 +112,35 @@ def get_file(fname, origin, untar=False,
     '''
 
     if download:
-        print('Downloading data from', origin)
-        global progbar
-        progbar = None
-
-        def dl_progress(count, block_size, total_size):
+        if 'modac.cancer.gov' in origin:
+            get_file_from_modac(fpath, origin)
+        else:
+            print('Downloading data from', origin)
             global progbar
-            if progbar is None:
-                progbar = Progbar(total_size)
-            else:
-                progbar.update(count * block_size)
-
-        error_msg = 'URL fetch failure on {}: {} -- {}'
-        try:
+            progbar = None
+    
+            def dl_progress(count, block_size, total_size):
+                global progbar
+                if progbar is None:
+                    progbar = Progbar(total_size)
+                else:
+                    progbar.update(count * block_size)
+    
+            error_msg = 'URL fetch failure on {}: {} -- {}'
             try:
-                urlretrieve(origin, fpath, dl_progress)
-            except URLError as e:
-                raise Exception(error_msg.format(origin, e.errno, e.reason))
-            except HTTPError as e:
-                raise Exception(error_msg.format(origin, e.code, e.msg))
-        except (Exception, KeyboardInterrupt) as e:
-            if os.path.exists(fpath):
-                os.remove(fpath)
-            raise
-        progbar = None
-        print()
+                try:
+                    urlretrieve(origin, fpath, dl_progress)
+                    # fpath = wget.download(origin)
+                except URLError as e:
+                    raise Exception(error_msg.format(origin, e.errno, e.reason))
+                except HTTPError as e:
+                    raise Exception(error_msg.format(origin, e.code, e.msg))
+            except (Exception, KeyboardInterrupt) as e:
+                if os.path.exists(fpath):
+                    os.remove(fpath)
+                raise
+            progbar = None
+            print()
 
     if untar:
         if not os.path.exists(untar_fpath):
