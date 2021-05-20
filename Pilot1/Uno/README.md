@@ -28,9 +28,9 @@ You can train Uno with the following dose response data sources, or a subset of 
 Data Source|Parameter Value
 ------------ | -------------
 The Cancer Therapeutics Response Portal |CTRP
-The Genomics of Drug Sensitivity in Cancer &#x1F534;_**(Question: project?)**_  |GDSC
-The Sarcoma &#x1F534;_**(Question: Is "Sarcoma" the full name for the SCL source?)**_  |SCL
-The Small Cell Lung Cancer &#x1F534;_**(Question: project?)**_ |SCLC
+The Genomics of Drug Sensitivity in Cancer |GDSC
+The NCI Sarcoma |SCL
+The NCI Small Cell Lung Cancer |SCLC
 The NCI-60 Human Cancer Cell Line Screen single drug response |NCI60
 A Large Matrix of Anti-Neoplastic Agent Combinations drug pair response |ALMANAC
 
