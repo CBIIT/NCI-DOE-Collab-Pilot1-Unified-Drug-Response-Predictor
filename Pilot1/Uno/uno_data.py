@@ -28,7 +28,7 @@ lib_path = os.path.abspath(os.path.join(file_path, '..', '..', 'common'))
 sys.path.append(lib_path)
 
 # import candle
-import file_utils
+# import file_utils
 
 global_cache = {}
 
