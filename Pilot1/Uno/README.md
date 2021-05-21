@@ -33,6 +33,8 @@ The NCI Sarcoma |SCL
 The NCI Small Cell Lung Cancer |SCLC
 The NCI-60 Human Cancer Cell Line Screen single drug response |NCI60
 A Large Matrix of Anti-Neoplastic Agent Combinations drug pair response |ALMANAC
+The Genentech Cell Line Screening Initiative |gCSI
+The Cancer Cell Line Encyclopedia |CCLE
 
 Training Uno on all data sources is slow. The `--train_sources` parameter can be used to test the code with a smaller set of training data. An example command line is the following.
 ```
@@ -44,7 +46,7 @@ A faster example is given in the `uno_by_drug_example.txt` configuration file. T
 uno_baseline_keras2.py --config_file uno_by_drug_example.txt
 ```
 
-Here is example output from running the script with all six sources:
+Here is the example output from running the script with six sources. This example requires around 5 days to complete using a single V100:
 
 ```
 python uno_baseline_keras2.py --train_sources CTRP GDSC NCI60 SCL SCLC ALMANAC --cache cache/all6 --use_landmark_genes True --preprocess_rnaseq source_scale --no_feature_source True --no_response_source True --cp True --batch_size 256 --timeout -1  
