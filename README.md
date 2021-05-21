@@ -8,7 +8,7 @@ Primary: Cancer biology data modeling</br>
 Secondary: Machine Learning; Bioinformatics; Computational Biology
 
 ### Usability
-To use the untrained model, users must be familiar with processing and feature extraction of molecular drug data, gene expression, and training of neural networks. The input to the model is preprocessed data. Users should have extended experience with preprocessing this data. There is not information how the processed data is generated from original public sources.
+To use the untrained model, users must be familiar with processing and feature extraction of molecular drug data, gene expression, and training of neural networks. The input to the model is preprocessed data. Users should have extended experience with preprocessing this data.
 
 ### Uniqueness
 The community can use a neural network and multiple machine learning techniques to predict drug response. The general rule is that classical methods like random forests would perform better for small datasets, while neural network approaches like Uno would perform better for relatively larger datasets. The baseline for comparison can be: mean response, linear regression, or random forest regression.
