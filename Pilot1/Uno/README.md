@@ -181,6 +181,7 @@ Current time ....211114.963
 Epoch 9/10
 78766/78766 [==============================] - 26194s 333ms/step - loss: 0.1050 - mae: 0.2109 - r2: 0.2854 - val_loss: 0.1413 - val_mae: 0.2386 - val_r2: -0.0088
 Current time ....237309.314
+Epoch 10/10
 78766/78766 [==============================] - 26272s 334ms/step - loss: 0.1015 - mae: 0.2070 - r2: 0.3125 - val_loss: 0.1463 - val_mae: 0.2384 - val_r2: 0.0617
 Comparing y_true and y_pred:
   mse: 0.1464
